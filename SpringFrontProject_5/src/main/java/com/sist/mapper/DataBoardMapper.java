@@ -1,0 +1,20 @@
+package com.sist.mapper;
+
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+import java.util.*;
+import com.sist.vo.*;
+
+public interface DataBoardMapper {
+	@Select("SELECT no,subject,name,TO_CHAR(regdate,'yyyy-mm-dd') as dbday,hit,num "
+			 +"FROM (SELECT no,subject,name,regdate,hit,rownum as num "
+			 +"FROM (SELECT no,subject,name,regdate,hit "
+			 +"FROM vue_databoard ORDER BY no DESC)) "
+			 +"WHERE num BETWEEN #{start} AND #{end}")
+	  public List<DataBoardVO> boardListData(@Param("start") int start,@Param("end") int end);
+	  
+	  @Select("SELECT CEIL(COUNT(*)/10.0) FROM vue_databoard")
+	  public int boardTotalPage();
+	
+}
