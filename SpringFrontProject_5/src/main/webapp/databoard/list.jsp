@@ -23,12 +23,14 @@
 	<div class="container">
 		<h3 class="text-center">자료실</h3>
 		<div class="row">
-			<table class="table">
+			<table>
 				<tr>
 					<td>
 						<a href="insert.do" class="btn btn-sm btn-danger">등록</a>
 					</td>
 				</tr>
+			</table>
+			<table class="table">
 				<thead>
 				<tr>
 					<th width="10%" class=text-center>번호</th>
@@ -39,12 +41,17 @@
 				</tr>
 				</thead>
 				<tbody>
-				<tr>
-					<td width="10%" class=text-center></td>
-					<td width="45%"></td>
-					<td width="15%" class=text-center></td>
-					<td width="20%" class=text-center></td>
-					<td width="10%" class=text-center></td>
+				<tr v-for="(vo, index) in list">
+					<td width="10%" class=text-center>{{count-index}}</td>
+					<%-- v-bind:href  == :href			--	v-bind 생략 가능
+						HTML태그의 속성에 값을 채울땐 :속성명
+						img= :src, :title
+						a= :href
+						--%>
+					<td width="45%"><a :href="'detail.do?no='+vo.no">{{vo.subject}}</a></td>
+					<td width="15%" class=text-center>{{vo.name}}</td>
+					<td width="20%" class=text-center>{{vo.dbday}}</td>
+					<td width="10%" class=text-center>{{vo.hit}}</td>
 				</tr>
 				</tbody>
 				<tfoot>
@@ -63,12 +70,15 @@
 		let dataApp=Vue.createApp({
 			data(){
 				return{
-					
+					board_list:[],
+					curpage:1,
+					totalpage:0,
+					count:0,
 				}
 			},
 			//생명주기(onload) : 브라우저 출력저에 서버로부터 데이터를 받는 경우
 			mounted(){
-				
+				this.dataRecv()
 			},
 			//멤버변수의 값이 변경된 경우(Component제작)
 			updated(){
@@ -76,7 +86,24 @@
 			},
 			//사용자 정의 메소드
 			methods:{
-				
+				//서버에서 데이터를 읽어온다(이전/다음/시작)
+				//반복제거방법(메소드)
+				dataRecv(){
+					axios.get('http://localhost:8080/web/databoard/list_vue.do',{
+						params:{
+							page:this.curpage
+						}
+					}).then(response=>{
+						console.log(response.data)
+						this.list=response.data.list
+						// response={data:{curpage:1, totalpage:0, count:0, list:[]}}
+						this.curpage=response.data.curpage
+						this.totalpage=response.data.totalpage
+						this.count=response.data.count
+					}).catch(error=>{
+						console.log(error.response)
+					})
+				}
 			}
 		}).mount('.container')
 	</script>
