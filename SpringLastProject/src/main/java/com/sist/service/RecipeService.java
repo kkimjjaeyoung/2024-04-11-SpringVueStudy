@@ -1,6 +1,9 @@
 package com.sist.service;
 
 import java.util.*;
+
+import org.apache.ibatis.annotations.Select;
+
 import com.sist.vo.*;
 
 //recipe 관련 기능 관리(결합성/의존성 낮은 프로그램)
@@ -13,5 +16,7 @@ public interface RecipeService {
 	
 	public ChefVO chefToday();
 	
+	public List<RecipeVO> recipeListData(Map map);
 
+	public int recipeTotalPage();
 }

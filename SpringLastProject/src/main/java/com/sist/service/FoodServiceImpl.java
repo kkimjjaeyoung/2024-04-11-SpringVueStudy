@@ -27,4 +27,28 @@ public class FoodServiceImpl implements FoodService{
 		// TODO Auto-generated method stub
 		return fDao.foodTotalPage();
 	}
+
+	@Override
+	public FoodVO foodDetailData(int fno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FoodVO foodInfoData(int fno) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<FoodVO> foodFindListData(Map map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int foodFindTotalPage(Map map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
