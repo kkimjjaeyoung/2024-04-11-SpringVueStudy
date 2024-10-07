@@ -31,24 +31,33 @@ public class FoodServiceImpl implements FoodService{
 	@Override
 	public FoodVO foodDetailData(int fno) {
 		// TODO Auto-generated method stub
-		return null;
+		return fDao.foodDetailData(fno);
 	}
 
+	// Cookie용 
 	@Override
 	public FoodVO foodInfoData(int fno) {
 		// TODO Auto-generated method stub
-		return null;
+		return fDao.foodInfoData(fno);
 	}
 
 	@Override
 	public List<FoodVO> foodFindListData(Map map) {
 		// TODO Auto-generated method stub
-		return null;
+		return fDao.foodFindListData(map);
 	}
 
 	@Override
 	public int foodFindTotalPage(Map map) {
 		// TODO Auto-generated method stub
-		return 0;
+		return fDao.foodFindTotalPage(map);
 	}
+
+	@Override
+	public List<FoodVO> foodTypeListData(String type) {
+		// TODO Auto-generated method stub
+		return fDao.foodTypeListData(type);
+	}
+  
+  
 }
