@@ -1,21 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
-<title>È¸¿ø°¡ÀÔ</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <script type="text/javascript" src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-
 </head>
 <body>
-  <!-- ****** Breadcumb Area Start ****** -->
-    <div class="breadcumb-area" style="background-image: url(../img/bg-img/breadcumb.jpg);">
+<div class="breadcumb-area" style="background-image: url(../img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="bradcumb-title text-center">
-                        <h2>È¸¿ø°¡ÀÔ</h2>
+                        <h2>íšŒì›ê°€ì…</h2>
                     </div>
                 </div>
             </div>
@@ -30,102 +28,105 @@
             </div>
         </div>
     </div>
-    <section class="single_blog_area section_padding_80" id="joinApp">
+    <section class="single_blog_area section_padding_20" id="joinApp">
         <div class="container">
             <div class="row justify-content-center">
-            	<form method="post" action="../member/join_ok.do" name="frm" @submit.prevent="sebmitForm()">
+              <form method="post" action="../member/join_ok.do" @submit="submitForm()">
 			    <table class="table">
 			     <tr>
 			      <th class="text-right" width="20%">ID</th>
-			      <td width="80%" >
-			       <input type="text" size=20 class="input-sm" 
-			          v-bind=readonly="idReadOnly" readonly name="id" ref="userId" v-model="userId">
-			       <input type="button" value="Áßº¹Ã¼Å©"
-			         class="btn-sm btn-danger" id="checkBtn" @click="idCheck()">
-			         <p>{{idOk}}</p>
-			      </td>
-			     </tr>
-			     <tr>
-			      <th class="text-right" width="20%">ºñ¹Ğ¹øÈ£</th>
-			      <td width="80%" >
-			       <input type="password" size=20 class="input-sm" name="pwd" id="pwd">
-			       <!-- &nbsp;ÀçÀÔ·Â:<input type="password" size=20 class="input-sm" id="pwd1"> -->	
-			      </td>
-			      </tr>
-			      <tr>
-			      <th class="text-right" width="20%">ºñ¹Ğ¹øÈ£ ÀçÀÔ·Â</th>
-			      <td width="80%" >
-			       <input type="password" size=20 class="input-sm" id="pwd1">
-			      </td>
-			     </tr>
-			     <tr>
-			      <th class="text-right" width="20%">ÀÌ¸§</th>
 			      <td width="80%">
-			       <input type="text" size=20 class="input-sm" name="name" id="name">
+			       <input type="text" size=15 class="input-sm" 
+			          v-bind:readonly="isReadOnly" name="userId" ref="userId" v-model="userId">
+			       <input type="button" value="ì¤‘ë³µì²´í¬"
+			         class="btn-sm btn-danger" @click="idCheck()">
+			       <p>{{idOk}}</p>
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">¼ºº°</th>
-			      <td width="80%" >
-			       <input type="radio" name="sex" value="³²ÀÚ" checked>³²ÀÚ
-			       <input type="radio" name="sex" value="¿©ÀÚ">¿©ÀÚ
-			      </td>
-			     </tr>
-			     <tr>
-			      <th class="text-right" width="20%">»ı³â¿ùÀÏ</th>
+			      <th class="text-right" width="20%">ë¹„ë°€ë²ˆí˜¸</th>
 			      <td width="80%">
-			       <input type="date" size=30 class="input-sm" name="birthday" id="day">
+			       <input type="password" size=15 class="input-sm" name="userPwd" ref="userPwd" v-model="userPwd"
+			         @keyup="pwdValidate()">
+			       
+			       &nbsp;ì¬ì…ë ¥:<input type="password" size=15 
+			       class="input-sm" ref="userPwd2" v-model="userPwd2"
+			         @keyup="pwdValidate2()">
+			       
+			       <p>{{pwdOk}}</p>
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">ÀÌ¸ŞÀÏ</th>
+			      <th class="text-right" width="20%">ì´ë¦„</th>
 			      <td width="80%">
-			       <input type="text" size=70 class="input-sm" name="email" id="email">
+			       <input type="text" size=15 class="input-sm" name="userName" ref="userName"
+			        v-model="userName">
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">¿ìÆí¹øÈ£</th>
-			      <td width="80%" >
-			       <input type="text" size=15 class="input-sm" name="post" readonly id="post1">
-			       <input type=button value="¿ìÆí¹øÈ£°Ë»ö"
-			         class="btn btn-sm btn-primary" id="postBtn">
-			      </td>
-			     </tr>
-			     <tr>
-			      <th class="text-right" width="20%">ÁÖ¼Ò</th>
+			      <th class="text-right" width="20%">ì„±ë³„</th>
 			      <td width="80%">
-			       <input type="text" size=70 class="input-sm" name="addr1" readonly id="addr1">
+			       <input type="radio" name="sex" value="ë‚¨ì" checked v-model="sex">ë‚¨ì
+			       <input type="radio" name="sex" value="ì—¬ì" v-model="sex">ì—¬ì
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">»ó¼¼ÁÖ¼Ò</th>
+			      <th class="text-right" width="20%">ìƒë…„ì›”ì¼</th>
 			      <td width="80%">
-			       <input type="text" size=70 class="input-sm" name="addr2">
+			       <input type="date" size=20 class="input-sm" name="birthday" v-model="birthday"
+			        ref="birthday"
+			       >
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">ÀüÈ­¹øÈ£</th>
-			      <td width="80%" >
-			       <select class="input-sm" name="phone1">
+			      <th class="text-right" width="20%">ì´ë©”ì¼</th>
+			      <td width="80%">
+			       <input type="text" size=50 class="input-sm" name="email" ref="email"
+			        v-model="email"
+			       >
+			      </td>
+			     </tr>
+			     <tr>
+			      <th class="text-right" width="20%">ìš°í¸ë²ˆí˜¸</th>
+			      <td width="80%">
+			       <input type="text" size=10 class="input-sm" name="post" readonly ref="post" v-model="post">
+			       <input type=button value="ìš°í¸ë²ˆí˜¸ê²€ìƒ‰"
+			         class="btn btn-sm btn-primary" @click="postFind()">
+			      </td>
+			     </tr>
+			     <tr>
+			      <th class="text-right" width="20%">ì£¼ì†Œ</th>
+			      <td width="80%">
+			       <input type="text" size=50 class="input-sm" name="addr1" readonly ref="addr1" v-model="addr1">
+			      </td>
+			     </tr>
+			     <tr>
+			      <th class="text-right" width="20%">ìƒì„¸ì£¼ì†Œ</th>
+			      <td width="80%">
+			       <input type="text" size=50 class="input-sm" name="addr2" ref="addr2" v-model="addr2">
+			      </td>
+			     </tr>
+			     <tr>
+			      <th class="text-right" width="20%">ì „í™”ë²ˆí˜¸</th>
+			      <td width="80%">
+			       <select class="input-sm" name="phone1" v-model="phone1">
 			        <option>010</option>
-			        <option>011</option>
-			        <option>017</option>
 			       </select>
-			       <input type="text" size=20 class="input-sm" name="phone2" id="phone2">
+			       <input type="text" size=20 class="input-sm" name="phone2" ref="phone2" v-model="phone2">
 			      </td>
 			     </tr>
 			     <tr>
-			      <th class="text-right" width="20%">¼Ò°³</th>
+			      <th class="text-right" width="20%">ì†Œê°œ</th>
 			      <td width="80%">
-			       <textarea rows="5" cols="70" name="content"></textarea>
+			       <textarea rows="5" cols="50" name="content" ref="content" v-model="content"></textarea>
 			      </td>
 			     </tr>
 			     <tr>
 			       <td colspan="2" class="text-center">
-			        <input type="submit" value="È¸¿ø°¡ÀÔ"
-			         class="btn-sm btn-info" id="joinBtn"
+			        <input type="submit" value="íšŒì›ê°€ì…"
+			         class="btn-sm btn-info"
 			        >
-			        <input type=button value="Ãë¼Ò"
+			        <input type=button value="ì·¨ì†Œ"
 			         class="btn-sm btn-warning"
 			         onclick="javascript:history.back()"
 			        >
@@ -136,40 +137,154 @@
             </div>
         </div>
     </section>
-<script>
-	let joinApp=Vue.createApp({
-		data(){
-			return{
-				userId:'',
-				idOk:'',
-				isReadOnly:false
-			}	
-		},
-		methods:{
-			idCheck(){
-				if(this.userId===''){
-					this.&refs.userId.focus()
-					return
-				}
-				axios.get('../member/idcheck_vue.do',{
-					params:{
-						userId:this.userId
-					}
-				}).then(response=>{
-					console.log(response.data)
-					if(response.data==='0'){
-						this.idOk='»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù'
-						this.isReadOnly=true
-					}
-					else{
-						this.idOk='ÀÌ¹Ì »ç¿ëÁßÀÎ ¾ÆÀÌµğÀÔ´Ï´Ù'		
-					}
-				}).catch(error=>{
-					console.log(error.response)
-				})
-			}
-		}
-	}).mount('#joinApp')
-</script>
+    <script>
+     let joinApp=Vue.createApp({
+    	 data(){
+    		 return {
+    			 userId:'',
+    			 idOk:'',
+    			 isReadOnly:false,
+    			 post:'',
+    			 addr1:'',
+    			 addr2:'',
+    			 userName:'',
+    			 phone1:'',
+    			 phone2:'',
+    			 birthday:'',
+    			 userPwd:'',
+    			 userPwd2:'',
+    			 content:'',
+    			 email:'',
+    			 sex:'',
+    			 pwdOk:''
+    		 }
+    	 },
+    	 methods:{
+    		 pwdValidate(){
+    			 let pwd=String(this.userPwd)
+    			 let num=pwd.search(/[0-9]/g)
+    			 let eng=pwd.search(/[a-z]/g)
+    			 if(pwd==='')
+    			 {
+    				 this.pwdOk=''
+    				 return
+    			 }
+    			 
+    			 if(pwd.length<8 || pwd.length>20)
+    			 {
+    				this.pwdOk='ë¹„ë°€ë²ˆí˜¸ëŠ” 8ìë¦¬~20ìë¦¬ ì´ë‚´ë¡œ ì…ë ¥í•˜ì„¸ìš”' 
+    				return
+    			 }
+    			 
+    			 else if(pwd.search(/\s/)!=-1)
+    		     {
+    				 this.pwdOk="ë¹„ë°€ë²ˆí˜¸ëŠ” ê³µë°±ì—†ì´ ì…ë ¥í•˜ì„¸ìš”"
+    				 return
+    		     }
+    			 else if(num<0 || eng<0)
+    			 {
+    				 this.pwdOk="ë¹„ë°€ë²ˆí˜¸ëŠ” ì˜ë¬¸,ìˆ«ìë¥¼ í˜¼í•©í•´ì„œ ì…ë ¥í•´ì•¼ í•©ë‹ˆë‹¤"
+    				 return
+    			 }
+    			 else
+    			 {
+    				 this.pwdOk=''
+    				 return
+    			 }
+    		 },
+    		 pwdValidate2(){
+    			 if(this.userPwd!=this.userPwd2)
+    			 {
+    				 this.pwdOk='ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤'
+    			 }
+    			 else
+    			 {
+    				 this.pwdOk=''
+    			 }
+    		 },
+    		 submitForm(e){
+    			 alert("íšŒì›ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤")
+    			 if(this.userId && this.userName && this.userPwd && this.sex 
+    				 && this.userPwd2 && this.birthday && this.post 
+    				 && this.addr1 && this.addr2 && this.content
+    				 && this.email && this.idOk!='' && this.pwdOk!=''
+    			   )
+    			 {
+    				 alert("ì •ìƒ ìˆ˜í–‰")
+    				 return true
+    			 }
+    			 
+    			 if(this.userId===''||this.idOk!='')
+    			 {
+    				 this.$refs.userId.focus()
+    			 }
+    			 else if(this.userName==='')
+    			 {
+    				 this.$refs.userName.focus()
+    			 }
+    			 else if(this.userPwd==='')
+    			 {
+    				 this.$refs.userPwd.focus()
+    			 }
+    			 else if(this.userPwd2==='')
+    			 {
+    				 this.$refs.userPwd2.focus()
+    			 }
+    			 else if(this.userPwd!==this.userPwd2)
+    			 {
+    				 this.userPwd=''
+    				 this.userPwd2=''
+    			 }
+    			 else if(this.phone2==='')
+    			 {
+    				 this.$refs.phone2.focus()
+    			 }
+    			 else if(this.email==='')
+    			 {
+    				 this.$refs.email.focus()
+    			 }
+    			 e.preventDefault()
+    		 },
+    		 postFind(){
+    			 let _this=this
+    			 new daum.Postcode({
+    				 oncomplete:function(data)
+    				 {
+    					 _this.post=data.zonecode
+    					 _this.addr1=data.address
+    				 }
+    			 }).open()
+    		 },
+    		 idCheck(){
+    			 if(this.userId==='')
+    			 {
+    				 this.$refs.userId.focus()
+    				 return
+    			 }
+    			 axios.get('../member/idcheck_vue.do',{
+    				 params:{
+    					 userId:this.userId
+    				 }
+    			 }).then(response=>{
+    				 console.log(response.data)
+    				 if(response.data===0)
+    				 {
+    					 this.idOk=''
+    					 this.isReadOnly=true
+    					 
+    				 }
+    				 else
+    				 {
+    					 this.idOk='ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ ì•„ì´ë””ì…ë‹ˆë‹¤'
+    					 this.userId=''
+    					 this.$refs.userId.focus()
+    				 }
+    			 }).catch(error=>{
+    				 console.log(error.response)
+    			 })
+    		 }
+    	 }
+     }).mount('#joinApp')
+    </script>
 </body>
 </html>
