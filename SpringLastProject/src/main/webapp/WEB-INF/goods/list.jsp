@@ -12,14 +12,13 @@
 </style>
 </head>
 <body>
-    <div id="findApp">
 <!-- ****** Breadcumb Area Start ****** -->
     <div class="breadcumb-area" style="background-image: url(../img/bg-img/breadcumb.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
                     <div class="bradcumb-title text-center">
-                        <h2>맛집 검색</h2>
+                        <h2>상품 목록</h2>
                     </div>
                 </div>
             </div>
@@ -31,11 +30,8 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item">
-                             <input type=text size=25 ref="fd"
-                               v-model="fd" @keydown.enter="foodFind()">
-                            </li>
-                            
+                            <li class="breadcrumb-item"></li>
+                            <li class="breadcrumb-item active" aria-current="page"></li>
                         </ol>
                     </nav>
                 </div>
@@ -45,16 +41,16 @@
     <!-- ****** Breadcumb Area End ****** -->
 
     <!-- ****** Archive Area Start ****** -->
-    <section class="archive-area section_padding_80">
+    <section class="archive-area section_padding_80" id="listApp">
         <div class="container">
             <div class="row">
                 <!-- Single Post -->
-                <div class="col-12 col-md-6 col-lg-4" v-for="vo in food_list">
+                <div class="col-12 col-md-6 col-lg-4" v-for="vo in goods_list">
                     <div class="single-post wow fadeInUp" data-wow-delay="0.1s">
                         <!-- Post Thumb -->
                         <div class="post-thumb">
-                           <a :href="'../food/detail_before.do?fno='+vo.fno">
-                            <img :src="'http://www.menupan.com'+vo.poster" style="width: 350px;height: 200px">
+                           <a :href="'../goods/detail.do?no='+vo.no">
+                            <img :src="vo.goods_poster" style="width: 350px;height: 200px">
                            </a>
                         </div>
                         <!-- Post Content -->
@@ -63,11 +59,11 @@
                                 <div class="post-author-date-area d-flex">
                                     <!-- Post Author -->
                                     <div class="post-author">
-                                        <a href="#">{{vo.type}}</a>
+                                        <a href="#">{{vo.goods_delivery}}</a>
                                     </div>
                                     <!-- Post Date -->
                                     <div class="post-date">
-                                        <a href="#" style="color:orange;">{{vo.score}}</a>
+                                        <a href="#" style="color:orange;">{{vo.hit}}</a>
                                         
                                         
                                     </div>
@@ -80,7 +76,7 @@
                                     </div>
                                     <!-- Post Comments -->
                                     <div class="post-comments">
-                                        <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 12</a>
+                                        <a href="#"><i class="fa fa-comment-o" aria-hidden="true"></i> 0</a>
                                     </div>
                                     <!-- Post Share -->
                                     <div class="post-share">
@@ -88,8 +84,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <a :href="'../food/detail_before.do?fno='+vo.fno">
-                                <h4 class="post-headline">{{vo.name}}</h4>
+                            <a :href="'../goods/detail.do?no='+vo.no">
+                                <h4 class="post-headline">{{vo.goods_name}}</h4>
                             </a>
                         </div>
                     </div>
@@ -123,41 +119,28 @@
             </div>
         </div>
     </section>
-    </div>
     <script>
-     let findApp=Vue.createApp({
+     let listApp=Vue.createApp({
     	 data(){
     		 return {
-    			 food_list:[],
+    			 goods_list:[],
     			 curpage:1,
     			 totalpage:0,
     			 startPage:0,
-    			 endPage:0,
-    			 fd:''
+    			 endPage:0
     		 }
     	 },
-    	 //window.onload => 브라우저 출력하기 전 : 출력할 데이터를 서버로부터 읽기
     	 mounted(){
     		 this.dataRecv()
     	 },
-    	 // 사용자 정의 함수 => 이벤트 처리 , 공통으로 적용 
     	 methods:{
-    		 foodFind(){
-    			if(this.fd==="")
-    			{
-    				this.$refs.fd.focus()
-    				return 
-    			}
-    			this.curpage=1
-    			this.dataRecv()
-    		 },
     		 prev(){
-    			 this.curpage=this.startPage-1
-    			 this.dataRecv()
+    			this.curpage=this.startPage-1
+    			this.dataRecv()
     		 },
     		 next(){
     			 this.curpage=this.endPage+1
-    			 this.dataRecv()
+     			 this.dataRecv()
     		 },
     		 pageChange(page){
     			 this.curpage=page
@@ -173,31 +156,24 @@
     			 }
     			 return arr
     		 },
-    		 
-    		 // 공통으로 사용되는 함수 => 서버연결후에 데이터 읽기
     		 dataRecv(){
-    			 axios.get('../food/find_vue.do',{
+    			 axios.get('../goods/list_vue.do',{
     				 params:{
-    					 page:this.curpage,
-    					 fd:this.fd
+    					 page:this.curpage
     				 }
     			 }).then(response=>{
-    				 // 정상 수행시 => 데이터를 읽어온다 
     				 console.log(response.data)
-    				 this.food_list=response.data.list
+    				 this.goods_list=response.data.list
     				 this.curpage=response.data.curpage
     				 this.totalpage=response.data.totalpage
     				 this.startPage=response.data.startPage
     				 this.endPage=response.data.endPage
     			 }).catch(error=>{
-    				 // 서버에서 에러 발생
-    				 alert(error.response)
     				 console.log(error.response)
     			 })
     		 }
     	 }
-    	 // components : Chef / Seoul , computed , watch , filter => Goods
-     }).mount('#findApp')
+     }).mount("#listApp")
     </script>
 </body>
 </html>

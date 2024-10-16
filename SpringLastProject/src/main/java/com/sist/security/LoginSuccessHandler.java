@@ -12,18 +12,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.sist.service.MemberService;
-import com.sist.vo.MemberVO;
-
+import com.sist.vo.*;
 import lombok.Setter;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler{
-	@Setter
-	private String defaultUrl;
-
-	@Autowired
-	private MemberService mService;
-	
-	
+    @Setter
+    private String defaultUrl;
+    
+    @Autowired 
+    private MemberService mService;
+    
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
@@ -39,4 +37,5 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler{
 		
 		response.sendRedirect("../main/main.do");
 	}
+
 }

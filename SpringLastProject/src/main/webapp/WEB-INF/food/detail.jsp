@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,10 +107,13 @@
                               </tr>
                               <tr>
                                 <td class="text-right">
+                                <c:if test="${sessionScope.userId!=null }">
                                   <a href="#" class="btn btn-xs btn-danger">좋아요</a>
                                   <a href="#" class="btn btn-xs btn-success">찜하기</a>
                                   <a href="#" class="btn btn-xs btn-info">예약</a>
+                               </c:if>
                                   <a href="../food/list.do" class="btn btn-xs btn-warning">목록</a>
+                                
                                 </td>
                               </tr>
                               <tr>
@@ -157,8 +161,9 @@
                    		    });    
                             </script>
                             <!-- Comment Area Start -->
+                            <div id="replyApp">
                             <div class="comment_area section_padding_50 clearfix">
-                                <h4 class="mb-30">2 Comments</h4>
+                                <h4 class="mb-30">댓글</h4>
 
                                 <ol>
                                     <!-- Single Comment Area -->
@@ -216,23 +221,46 @@
                             </div>
 
                             <!-- Leave A Comment -->
+                            <c:if test="${sessionScope.userId!=null }">
                             <div class="leave-comment-area section_padding_50 clearfix">
                                 <div class="comment-form">
-                                    <h4 class="mb-30">Leave A Comment</h4>
-
-                                    <!-- Comment Form -->
-                                    <form action="#" method="post">
-                                       
-                                    </form>
+                                    <table class="table">
+                                    	<tr>
+                                    		<td>
+                                    			<textarea row="4" cols="70" style="float: left" ref="msg" v-model="msg"></textarea>
+                                    			<input type="button" value="댓글" style="float: left; background-color: white; width: 80px; height: 94px;">
+                                    			
+                                    		</td>
+                                    	</tr>
+                                    </table>
                                 </div>
                             </div>
-
+                            </c:if>
+							</div>
+							
                         </div>
                     </div>
                 </div>
           </div>
       </div>
     </section>
+    <script>
+    	let replyApp=Vue.createApp({
+    		data(){
+    			return{
+    				
+    			}
+    		},
+    		mounted(){
+    			
+    		},
+    		methods:{
+    			dataRecv(){
+    				
+    			}
+    		}
+    	}).moun('#replyApp')
+    </script>
   <script>
    let detailApp=Vue.createApp({
 	   data(){

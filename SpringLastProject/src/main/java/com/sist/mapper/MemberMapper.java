@@ -22,13 +22,13 @@ public interface MemberMapper {
 	
 	//비밀번호 검사
 	@Select("SELECT userId,userName,userPwd,enabled, authority "
-			+ "FROM psring_member sm, authority au "
+			+ "FROM spring_member sm, authority au "
 			+ "WHERE pm.userId=au.userId "
 			+ "AND pm.userId=#{userId}")
 	public MemberVO memberInfoData(String userId);
 	
 	@Select("SELECT userId,userName,userPwd, sex, email "
-			+ "FROM psring_member "
+			+ "FROM spring_member "
 			+ "WHERE userId=#{userId}")
 	public MemberVO memberSessionData(String userId);
 	
